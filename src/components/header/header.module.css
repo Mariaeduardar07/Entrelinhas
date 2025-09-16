@@ -1,15 +1,17 @@
 
 .header {
-  background: var(--cor-1);
-  box-shadow: 0 2px 12px rgba(163, 143, 133, 0.10); /* cor-5 */
-  border-bottom: 2px solid var(--cor-5);
+  background: rgba(229, 223, 216, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 2px 12px rgba(45, 48, 71, 0.15);
+  border-bottom: 1px solid rgba(45, 48, 71, 0.2);
   padding: 1.2rem 0;
   position: sticky;
   top: 0;
   width: 100%;
   z-index: 100;
   margin-bottom: 2rem;
-  transition: background 0.3s, box-shadow 0.3s;
+  transition: all 0.3s ease;
 }
 
 
