@@ -8,4 +8,12 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--cor-1);
+}
+:root {
+  --cor-1: #EDE9E3;
+  --cor-2: #E7D7C9;
+  --cor-3: #D4B2A7;
+  --cor-4: #CDC6C3;
+  --cor-5: #A38F85;
 }

@@ -1,4 +1,5 @@
 import "./globals.css";
+import Header from "@/components/header";
 
 export const metadata = {
     title: "Entrelinhas",
@@ -11,7 +12,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html>
-            <body>{children}</body>
+            <body>
+              <Header />
+              {children}
+              </body>
         </html>
     );
 }
