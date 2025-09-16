@@ -18,7 +18,7 @@ export default function Header() {
               </Link>
             </li>
             <li className={styles.navItem}>
-              <Link href="/listagem" className={styles.navLink}>
+              <Link href="/autores" className={styles.navLink}>
                 Autores
               </Link>
             </li>
