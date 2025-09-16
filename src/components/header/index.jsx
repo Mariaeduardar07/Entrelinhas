@@ -19,17 +19,17 @@ export default function Header() {
             </li>
             <li className={styles.navItem}>
               <Link href="/listagem" className={styles.navLink}>
-                Listagem
-              </Link>
-            </li>
-            <li className={styles.navItem}>
-              <Link href="/favoritos" className={styles.navLink}>
-                Favoritos
+                Autores
               </Link>
             </li>
             <li className={styles.navItem}>
               <Link href="/sobre" className={styles.navLink}>
                 Sobre Mim
+              </Link>
+            </li>
+            <li className={styles.navItem}>
+              <Link href="/favoritos" className={styles.navLink}>
+                Favoritos
               </Link>
             </li>
           </ul>
