@@ -1,7 +1,11 @@
+
 .container {
   min-height: 100vh;
-  background-color: #e9e9e9;
+  background: linear-gradient(135deg, #f5efeb 0%, #e5dfd8 100%);
   padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .content {
@@ -35,15 +39,18 @@
   background-color: #1e4a5f;
 }
 
+
 .detailsCard {
-  background-color: white;
-  border-radius: 1rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  background: rgba(255,255,255,0.55);
+  border-radius: 2rem;
+  box-shadow: 0 12px 32px rgba(85,104,119,0.10), 0 1.5px 4px rgba(163,136,123,0.08);
   overflow: hidden;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0;
-  min-height: 500px;
+  min-height: 520px;
+  backdrop-filter: blur(12px);
+  border: 1.5px solid #e5dfd8;
+  position: relative;
 }
 
 .cardMeta {
@@ -72,15 +79,29 @@
   }
 }
 
+
 .imageSection {
   position: relative;
-  background-color: #f3f4f6;
+  background: linear-gradient(135deg, #e5dfd8 0%, #f5efeb 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 0;
 }
 
+
 .image {
-  width: 100%;
-  height: 100%;
+  width: 320px;
+  height: 320px;
   object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 8px 32px rgba(85,104,119,0.15), 0 2px 8px rgba(163,136,123,0.10);
+  border: 6px solid #fff;
+  background: #e5dfd8;
+  transition: transform 0.3s;
+}
+.image:hover {
+  transform: scale(1.04) rotate(2deg);
 }
 
 .infoSection {
@@ -137,4 +158,37 @@
 .imagePlaceholder:hover {
   border-color: #999;
   background: linear-gradient(135deg, #e3e7eb 0%, #b8c6db 100%);
+}
+
+.booksList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.bookItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, 
+    rgba(38, 101, 140, 0.1) 0%, 
+    rgba(136, 84, 192, 0.08) 100%);
+  border-radius: 12px;
+  border-left: 4px solid #26658c;
+  color: #1e4a5f;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.bookItem:hover {
+  transform: translateX(8px);
+  box-shadow: 0 4px 12px rgba(38, 101, 140, 0.2);
+}
+
+.placeholder {
+  color: #9ca3af;
+  font-style: italic;
+  opacity: 0.8;
 }

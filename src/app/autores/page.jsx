@@ -15,7 +15,6 @@ export default function AutoresPage() {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(6);
-  const [imageErrors, setImageErrors] = useState(new Set());
 
   // Função para buscar todos os autores
   const fetchAutores = async () => {
@@ -56,22 +55,6 @@ export default function AutoresPage() {
     setCurrentPage(1);
   };
 
-  // Função para tratar erros de imagem
-  const handleImageError = (autorId) => {
-    setImageErrors(prev => new Set([...prev, autorId]));
-  };
-
-  // Função para verificar se uma URL de imagem é válida
-  const isValidImageUrl = (url) => {
-    if (!url) return false;
-    try {
-      new URL(url);
-      return true;
-    } catch {
-      return false;
-    }
-  };
-
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -109,35 +92,32 @@ export default function AutoresPage() {
                 href={`/autores/${autor.id}`}
                 className={styles.cardLink}
               >
-                <div className={styles.userCard}>
-                  <div className={styles.cardContent}>
-                    <div className={styles.imageSection}>
-                      {isValidImageUrl(autor.imageUrl) && !imageErrors.has(autor.id) ? (
-                        <Image
-                          src={autor.imageUrl}
-                          alt={autor.nome}
-                          fill
-                          className={styles.cardImage}
-                          onError={() => handleImageError(autor.id)}
-                        />
-                      ) : (
-                        <div className={styles.imagePlaceholder}>
-                          <div className={styles.icon}>📚</div>
-                          <span>Imagem não disponível</span>
-                        </div>
-                      )}
+                <article className={styles.autorCard}>
+                  <div className={styles.cardBackground}></div>
+                  
+                  <div className={styles.imageWrapper}>
+                    <div className={styles.imageFrame}>
+                      <img
+                        src={autor.imageUrl || '/icons/favicon.ico'}
+                        alt={autor.nome}
+                        className={styles.autorImage}
+                      />
                     </div>
-                    
-                    <h3 className={styles.userName}>{autor.nome}</h3>
-                    
-                
-                    
-                    <button className={styles.viewButton}>
-                      Ver Detalhes
-                      <ArrowRight size={16} />
-                    </button>
                   </div>
-                </div>
+                  
+                  <div className={styles.cardContent}>
+                    <h3 className={styles.autorNome}>{autor.nome}</h3>
+                    <div className={styles.readMore}>
+                      <span>Explorar biografia</span>
+                      <div className={styles.arrow}>→</div>
+                    </div>
+                  </div>
+                  
+                  <div className={styles.decorativeElements}>
+                    <div className={styles.topQuote}>"</div>
+                    <div className={styles.bottomQuote}>"</div>
+                  </div>
+                </article>
               </Link>
             ))}
           </div>
