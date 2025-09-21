@@ -11,10 +11,10 @@ html, body {
   background: var(--cor-0);
 }
 :root {
-  --cor-0: #f5efeb
-  --cor-1: #e5dfd8;
-  --cor-2: #a3887b;
-  --cor-3: #556877;
-  --cor-4: #2d3047;
-  --cor-5: #2d3047;
+  --cor-0: #f6f4f0;
+  --cor-1: #f6f4f0;
+  --cor-2: #2c3838;
+  --cor-3: #2c3838;
+  --cor-4: #2c3838;
+  --cor-5: #2c3838;
 }

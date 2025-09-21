@@ -1,10 +1,10 @@
 
 .header {
-  background: rgba(229, 223, 216, 0.8);
+  background: rgba(246, 244, 240, 0.95);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 2px 12px rgba(45, 48, 71, 0.15);
-  border-bottom: 1px solid rgba(45, 48, 71, 0.2);
+  box-shadow: 0 2px 12px rgba(44, 56, 56, 0.1);
+  border-bottom: 1px solid rgba(44, 56, 56, 0.1);
   padding: 1.2rem 0;
   position: sticky;
   top: 0;
@@ -39,7 +39,7 @@
   margin: 0;
   color: var(--cor-5);
   letter-spacing: -0.02em;
-  text-shadow: 0 2px 8px rgba(163, 143, 133, 0.10); /* cor-5 */
+  text-shadow: 0 2px 8px rgba(44, 56, 56, 0.1);
 }
 
 .logoIcon {
@@ -50,7 +50,7 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: #ffffff;
+  background: var(--cor-0);
   font-weight: bold;
   color: var(--cor-5);
 }
@@ -100,7 +100,7 @@
   position: relative;
   text-transform: uppercase;
   letter-spacing: 0.07em;
-  box-shadow: 0 1px 4px rgba(163, 143, 133, 0.04);
+  box-shadow: 0 1px 4px rgba(44, 56, 56, 0.05);
 }
 
 
@@ -108,10 +108,10 @@
 
 
 .navLink:hover {
-  color: var(--cor-3);
-  background: var(--cor-1);
+  color: var(--cor-0);
+  background: var(--cor-5);
   transform: scale(1.07) translateY(-2px);
-  box-shadow: 0 2px 8px rgba(212, 178, 167, 0.10);
+  box-shadow: 0 2px 8px rgba(44, 56, 56, 0.2);
 }
 
 
