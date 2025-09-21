@@ -72,7 +72,7 @@ export default function HeroSection() {
 
           <div className={styles.imageFrame}>
             <Image
-              src="/image/minhsFoto.png"
+              src="/image/duda.png"
               alt="Maria Eduarda - Desenvolvedora e Apaixonada por Literatura"
               width={400}
               height={400}

@@ -3,10 +3,8 @@
 import { useState, useEffect } from "react";
 import { Spin, Pagination } from "antd";
 import Link from "next/link";
-import Image from "next/image";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
-import { ArrowRight, BookOpen, Clock, Lightbulb } from "lucide-react";
 import "react-toastify/dist/ReactToastify.css";
 import styles from "./autores.module.css";
 
@@ -16,43 +14,49 @@ export default function AutoresPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(6);
 
-  // Função para buscar todos os autores
   const fetchAutores = async () => {
     try {
       const response = await axios.get("http://localhost:5000/author");
       setAutores(response.data);
-      toast.success("Autores carregados com sucesso!", {
-        toastId: "success-load", // ID único para evitar duplicatas
-      });
+      toast.success("Autores carregados!");
     } catch (error) {
-      console.error("Erro ao buscar autores:", error);
-      toast.error("Erro ao carregar autores.", {
-        toastId: "error-load",
-      });
+      toast.error("Erro ao carregar autores.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Executa a busca quando o componente carrega
   useEffect(() => {
     fetchAutores();
   }, []);
 
-  // Calcula quais autores mostrar na página atual
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   const currentAutores = autores.slice(startIndex, endIndex);
 
-  // Função para mudar de página
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
-  // Função para mudar quantidade de itens por página
   const handlePageSizeChange = (current, size) => {
     setPageSize(size);
     setCurrentPage(1);
+  };
+
+  const getAuthorImage = (autor) => {
+    const imageMap = {
+      'Machado de Assis': '/image/machadoDeAssis.png',
+      'José de Alencar': '/image/joseDeAlencar.png', 
+      'Graciliano Ramos': '/image/gracilianoRamos.png',
+      'Jorge Amado': '/image/jorgeAmado.png',
+      'Clarice Lispector': '/image/clariceLispector.png',
+      'Manuel Bandeira': '/image/manuelBandeira.png',
+      'Carlos Drummond de Andrade': '/image/carlosDrummond.png',
+      'Cecília Meireles': '/image/ceciliaMeireles.png',
+      'Lima Barreto': '/image/limaBarreto.png'
+    };
+    
+    return imageMap[autor.nome] || '/image/imgBanner.png';
   };
 
   return (
@@ -98,9 +102,12 @@ export default function AutoresPage() {
                   <div className={styles.imageWrapper}>
                     <div className={styles.imageFrame}>
                       <img
-                        src={autor.imageUrl || '/icons/favicon.ico'}
+                        src={getAuthorImage(autor)}
                         alt={autor.nome}
                         className={styles.autorImage}
+                        onError={(e) => {
+                          e.target.src = '/image/imgBanner.png';
+                        }}
                       />
                     </div>
                   </div>

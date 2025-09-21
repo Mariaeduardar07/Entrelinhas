@@ -33,6 +33,24 @@ export default function DetalhesAutor() {
     }
   }, [params.id]);
 
+  // Função para obter a imagem local do autor
+  const getAuthorImage = (autor) => {
+    // Mapeamento manual para garantir que funcione
+    const imageMap = {
+      'Carlos Drummond de Andrade': '/image/carlosDrummond.png',
+      'Cecília Meireles': '/image/ceciliaMeireles.png',
+      'Clarice Lispector': '/image/clariceLispector.png',
+      'Graciliano Ramos': '/image/gracilianoRamos.png',
+      'Jorge Amado': '/image/jorgeAmado.png',
+      'José de Alencar': '/image/joseDeAlencar.png',
+      'Lima Barreto': '/image/limaBarreto.png',
+      'Machado de Assis': '/image/machadoDeAssis.png',
+      'Manuel Bandeira': '/image/manuelBandeira.png'
+    };
+
+    return imageMap[autor.nome] || '/image/imgBanner.png';
+  };
+
   // Função para verificar se uma URL de imagem é válida
   const isValidImageUrl = (url) => {
     if (!url) return false;
@@ -86,42 +104,26 @@ export default function DetalhesAutor() {
 
         <div className={styles.detailsCard}>
           <div className={styles.imageSection}>
-            {isValidImageUrl(autor.imageUrl) && !imageError ? (
-              <img
-                src={autor.imageUrl}
-                alt={autor.nome}
-                className={styles.image}
-                style={{
-                  width: "100%",
-                  height: "300px",
-                  objectFit: "cover",
-                  borderRadius: "24px",
-                  boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
-                  backdropFilter: "blur(8px)",
-                  border: "1.5px solid rgba(255,255,255,0.18)",
-                  transition: "transform 0.3s cubic-bezier(.68,-0.55,.27,1.55)",
-                }}
-                onError={handleImageError}
-                onMouseOver={e => e.currentTarget.style.transform = "scale(1.04)"}
-                onMouseOut={e => e.currentTarget.style.transform = "scale(1)"}
-              />
-            ) : (
-              <img
-                src={fallbackImage}
-                alt="Imagem padrão"
-                className={styles.image}
-                style={{
-                  width: "100%",
-                  height: "300px",
-                  objectFit: "cover",
-                  borderRadius: "24px",
-                  boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
-                  backdropFilter: "blur(8px)",
-                  border: "1.5px solid rgba(255,255,255,0.18)",
-                  opacity: 0.7,
-                }}
-              />
-            )}
+            <img
+              src={getAuthorImage(autor)}
+              alt={autor.nome}
+              className={styles.image}
+              style={{
+                width: "100%",
+                height: "300px",
+                objectFit: "cover",
+                borderRadius: "24px",
+                boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
+                backdropFilter: "blur(8px)",
+                border: "1.5px solid rgba(255,255,255,0.18)",
+                transition: "transform 0.3s cubic-bezier(.68,-0.55,.27,1.55)",
+              }}
+              onError={(e) => {
+                e.target.src = fallbackImage;
+              }}
+              onMouseOver={e => e.currentTarget.style.transform = "scale(1.04)"}
+              onMouseOut={e => e.currentTarget.style.transform = "scale(1)"}
+            />
           </div>
 
           <div className={styles.infoSection}>
