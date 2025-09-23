@@ -108,29 +108,19 @@ export default function DetalhesAutor() {
               src={getAuthorImage(autor)}
               alt={autor.nome}
               className={styles.image}
-              style={{
-                width: "100%",
-                height: "300px",
-                objectFit: "cover",
-                borderRadius: "24px",
-                boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
-                backdropFilter: "blur(8px)",
-                border: "1.5px solid rgba(255,255,255,0.18)",
-                transition: "transform 0.3s cubic-bezier(.68,-0.55,.27,1.55)",
-              }}
               onError={(e) => {
                 e.target.src = fallbackImage;
               }}
-              onMouseOver={e => e.currentTarget.style.transform = "scale(1.04)"}
-              onMouseOut={e => e.currentTarget.style.transform = "scale(1)"}
             />
           </div>
 
-          <div className={styles.infoSection}>
+          <div className={styles.titleSection}>
             <h1 className={styles.title}>
               {autor.nome || <span className={styles.value}>Nome não disponível</span>}
             </h1>
+          </div>
 
+          <div className={styles.infoSection}>
             <div className={styles.detailsGrid}>
               <div className={styles.detailItem}>
                 <span className={styles.label}>Biografia:</span>
@@ -158,13 +148,6 @@ export default function DetalhesAutor() {
                   <span className={styles.badge}>
                     <BookOpen size={12} />
                     {autor.books.length} {autor.books.length === 1 ? 'livro' : 'livros'}
-                  </span>
-                )}
-
-                {autor.curiosities && (
-                  <span className={styles.badge}>
-                    <Lightbulb size={12} />
-                    Curiosidades
                   </span>
                 )}
               </div>
