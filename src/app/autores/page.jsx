@@ -43,20 +43,17 @@ export default function AutoresPage() {
     setCurrentPage(1);
   };
 
-  const getAuthorImage = (autor) => {
-    const imageMap = {
-      'Machado de Assis': '/image/machadoDeAssis.png',
-      'José de Alencar': '/image/joseDeAlencar.png', 
-      'Graciliano Ramos': '/image/gracilianoRamos.png',
-      'Jorge Amado': '/image/jorgeAmado.png',
-      'Clarice Lispector': '/image/clariceLispector.png',
-      'Manuel Bandeira': '/image/manuelBandeira.png',
-      'Carlos Drummond de Andrade': '/image/carlosDrummond.png',
-      'Cecília Meireles': '/image/ceciliaMeireles.png',
-      'Lima Barreto': '/image/limaBarreto.png'
-    };
+  // Processa a imageUrl do backend
+  const getImageUrl = (autor) => {
+    if (!autor.imageUrl) return '/image/imgBanner.png';
     
-    return imageMap[autor.nome] || '/image/imgBanner.png';
+    // Se a imageUrl começa com 'public/', remove essa parte
+    if (autor.imageUrl.startsWith('public/')) {
+      return '/' + autor.imageUrl.substring(7); // Remove 'public/' e adiciona '/'
+    }
+    
+    // Se já é uma URL completa ou caminho absoluto, usa como está
+    return autor.imageUrl;
   };
 
   return (
@@ -102,7 +99,7 @@ export default function AutoresPage() {
                   <div className={styles.imageWrapper}>
                     <div className={styles.imageFrame}>
                       <img
-                        src={getAuthorImage(autor)}
+                        src={getImageUrl(autor)}
                         alt={autor.nome}
                         className={styles.autorImage}
                         onError={(e) => {

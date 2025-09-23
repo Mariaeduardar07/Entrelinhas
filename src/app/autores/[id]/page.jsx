@@ -33,22 +33,17 @@ export default function DetalhesAutor() {
     }
   }, [params.id]);
 
-  // Função para obter a imagem local do autor
-  const getAuthorImage = (autor) => {
-    // Mapeamento manual para garantir que funcione
-    const imageMap = {
-      'Carlos Drummond de Andrade': '/image/carlosDrummond.png',
-      'Cecília Meireles': '/image/ceciliaMeireles.png',
-      'Clarice Lispector': '/image/clariceLispector.png',
-      'Graciliano Ramos': '/image/gracilianoRamos.png',
-      'Jorge Amado': '/image/jorgeAmado.png',
-      'José de Alencar': '/image/joseDeAlencar.png',
-      'Lima Barreto': '/image/limaBarreto.png',
-      'Machado de Assis': '/image/machadoDeAssis.png',
-      'Manuel Bandeira': '/image/manuelBandeira.png'
-    };
-
-    return imageMap[autor.nome] || '/image/imgBanner.png';
+  // Processa a imageUrl do backend
+  const getImageUrl = (autor) => {
+    if (!autor.imageUrl) return fallbackImage;
+    
+    // Se a imageUrl começa com 'public/', remove essa parte
+    if (autor.imageUrl.startsWith('public/')) {
+      return '/' + autor.imageUrl.substring(7); // Remove 'public/' e adiciona '/'
+    }
+    
+    // Se já é uma URL completa ou caminho absoluto, usa como está
+    return autor.imageUrl;
   };
 
   // Função para verificar se uma URL de imagem é válida
@@ -105,7 +100,7 @@ export default function DetalhesAutor() {
         <div className={styles.detailsCard}>
           <div className={styles.imageSection}>
             <img
-              src={getAuthorImage(autor)}
+              src={getImageUrl(autor)}
               alt={autor.nome}
               className={styles.image}
               onError={(e) => {

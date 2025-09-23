@@ -1,7 +1,7 @@
-import Image from "next/image";
 import styles from "./page.module.css";
 import Banner from "@/components/bannerHome";
 import Objectives from "@/components/objectives";
+import AutoresCarrossel from "@/components/autoresCarrossel";
 
 export default function Home() {
   return (
@@ -13,6 +13,9 @@ export default function Home() {
         image="/image/imgBanner.png"
         imageAlt="Livro aberto"
       />
+      
+      <AutoresCarrossel />
+      
       <Objectives />
     </div>
   );
