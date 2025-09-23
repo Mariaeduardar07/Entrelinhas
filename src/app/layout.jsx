@@ -1,5 +1,13 @@
 import "./globals.css";
+import { Cormorant_Garamond } from 'next/font/google';
+
 import Header from "@/components/header";
+
+const cormorantGaramond = Cormorant_Garamond({ 
+  subsets: ['latin'],
+  weight: ['400', '600', '700'],
+  display: 'swap',
+});
 
 export const metadata = {
     title: "Entrelinhas",
@@ -11,7 +19,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
     return (
-        <html>
+        <html className={cormorantGaramond.className}>
             <body>
               <Header />
               {children}
