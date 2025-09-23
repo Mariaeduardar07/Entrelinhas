@@ -173,7 +173,7 @@ export default function AutoresCarrossel() {
     return (
       <section className={styles.section}>
         <div className={styles.container}>
-          <h2 className={styles.title}>Nossos Autores</h2>
+          <h2 className={styles.title}>Explore os autores</h2>
           <div className={styles.loading}>
             <div className={styles.spinner}></div>
             <p>Carregando autores...</p>
@@ -216,15 +216,15 @@ export default function AutoresCarrossel() {
   }
 
   const totalSlides = Math.max(0, autores.length - visibleCards);
-  const canGoPrev = totalSlides > 0;
-  const canGoNext = totalSlides > 0;
+  const canGoPrev = currentIndex > 0;
+  const canGoNext = currentIndex < totalSlides;
 
   return (
     <section className={styles.section}>
       <div className={styles.container}>
         <div className={styles.header}>
           <div className={styles.titleContainer}>
-            <h2 className={styles.title}>Nossos Autores</h2>
+            <h2 className={styles.title}>Explore os Autores</h2>
             <p className={styles.subtitle}>
               Descubra os grandes escritores e suas histórias fascinantes
             </p>
@@ -238,10 +238,6 @@ export default function AutoresCarrossel() {
             >
               {isAutoPlay ? <Pause size={20} /> : <Play size={20} />}
             </button>
-            
-            <div className={styles.counter}>
-              {currentIndex + 1} / {totalSlides + 1}
-            </div>
           </div>
         </div>
 
@@ -297,35 +293,6 @@ export default function AutoresCarrossel() {
             <ChevronRight size={24} />
           </button>
         </div>
-
-        {/* Indicadores */}
-        {totalSlides > 0 && (
-          <div className={styles.indicators}>
-            {Array.from({ length: totalSlides + 1 }, (_, index) => (
-              <button
-                key={index}
-                className={`${styles.indicator} ${index === currentIndex ? styles.active : ''}`}
-                onClick={() => goToSlide(index)}
-                aria-label={`Ir para slide ${index + 1}`}
-              >
-                <span className={styles.indicatorProgress}></span>
-              </button>
-            ))}
-          </div>
-        )}
-
-        {/* Progress Bar */}
-        {isAutoPlay && (
-          <div className={styles.progressContainer}>
-            <div 
-              className={styles.progressBar}
-              style={{
-                animationDuration: isPaused ? '0s' : '4s',
-                animationPlayState: isPaused ? 'paused' : 'running'
-              }}
-            ></div>
-          </div>
-        )}
       </div>
     </section>
   );

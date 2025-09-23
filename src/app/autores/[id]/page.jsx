@@ -132,13 +132,6 @@ export default function DetalhesAutor() {
               </div> 
 
               <div className={styles.cardMeta}>
-                {autor.historical_period && (
-                  <span className={styles.badge}>
-                    <Clock size={12} />
-                    {autor.historical_period}
-                  </span>
-                )}
-
                 {autor.books && autor.books.length > 0 && (
                   <span className={styles.badge}>
                     <BookOpen size={12} />

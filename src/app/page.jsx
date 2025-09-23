@@ -13,10 +13,9 @@ export default function Home() {
         image="/image/imgBanner.png"
         imageAlt="Livro aberto"
       />
-      
-      <AutoresCarrossel />
-      
       <Objectives />
+
+      <AutoresCarrossel />
     </div>
   );
 }
