@@ -1,6 +1,7 @@
 import styles from "./bannerHome.module.css";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Banner({
   title,
@@ -8,28 +9,31 @@ export default function Banner({
   button,
   image,
   imageAlt,
+  href = "/autores"
 }) {
   return (
-    <div className={styles.section}>
+    <section className={styles.section}>
       <div className={styles.content}>
-        <h2 className={styles.title}>{title}</h2>
+        <h1 className={styles.title}>{title}</h1>
         <p className={styles.description}>{description}</p>
         <div className={styles.buttonContainer}>
-            <button className={styles.button}>
-              {button} 
-              <ChevronRight size={16} strokeWidth={2} />
-            </button>
+          <Link href={href} className={styles.button}>
+            {button} 
+            <ChevronRight size={20} strokeWidth={2.5} />
+          </Link>
         </div> 
       </div>
       <div className={styles.imageContainer}>
         <Image
           src={image}
           alt={imageAlt}
-          width={600}
-          height={400}
+          width={700}
+          height={500}
           className={styles.image}
+          priority
+          sizes="(max-width: 768px) 100vw, 50vw"
         />
       </div>
-    </div>
+    </section>
   );
 }
