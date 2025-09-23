@@ -139,6 +139,13 @@ export default function AutoresPage() {
         draggable
         pauseOnHover
         theme="light"
+        enableMultiContainer={false}
+        containerId="autores-toast"
+        toastClassName="custom-toast"
+        limit={3}
+        style={{ zIndex: 9999 }}
+        preventDuplicates={true}
+        transition={undefined}
       />
     </div>
   );

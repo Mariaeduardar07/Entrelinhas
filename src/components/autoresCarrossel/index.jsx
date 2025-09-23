@@ -64,40 +64,71 @@ export default function AutoresCarrossel() {
 
   const [visibleCards, setVisibleCards] = useState(4);
   const [mounted, setMounted] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
+  // Prevent hydration mismatch
   useEffect(() => {
-    setMounted(true);
+    try {
+      setMounted(true);
+      setIsClient(typeof window !== 'undefined');
+    } catch (error) {
+      console.warn('Erro na hidratação do componente:', error);
+    }
   }, []);
 
   useEffect(() => {
-    if (!mounted) return;
+    if (!mounted || !isClient || typeof window === 'undefined') return;
     
-    const handleResize = () => {
-      setVisibleCards(getVisibleCards());
-    };
+    try {
+      const handleResize = () => {
+        if (typeof window !== 'undefined') {
+          setVisibleCards(getVisibleCards());
+        }
+      };
 
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [mounted, getVisibleCards]);
+      handleResize();
+      window.addEventListener("resize", handleResize);
+      
+      return () => {
+        try {
+          if (typeof window !== 'undefined') {
+            window.removeEventListener("resize", handleResize);
+          }
+        } catch (error) {
+          console.warn('Erro ao remover event listener:', error);
+        }
+      };
+    } catch (error) {
+      console.warn('Erro ao configurar event listener de resize:', error);
+    }
+  }, [mounted, isClient, getVisibleCards]);
 
   // Auto-play functionality
   useEffect(() => {
-    if (!isAutoPlay || isPaused || autores.length === 0) return;
+    if (!isAutoPlay || isPaused || autores.length === 0 || !mounted) return;
 
-    intervalRef.current = setInterval(() => {
-      setCurrentIndex(prevIndex => {
-        const maxIndex = Math.max(0, autores.length - visibleCards);
-        return prevIndex >= maxIndex ? 0 : prevIndex + 1;
-      });
-    }, 4000); // Muda a cada 4 segundos
+    try {
+      intervalRef.current = setInterval(() => {
+        setCurrentIndex(prevIndex => {
+          const maxIndex = Math.max(0, autores.length - visibleCards);
+          return prevIndex >= maxIndex ? 0 : prevIndex + 1;
+        });
+      }, 4000); // Muda a cada 4 segundos
 
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
-  }, [isAutoPlay, isPaused, autores.length, visibleCards]);
+      return () => {
+        try {
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+          }
+        } catch (error) {
+          console.warn('Erro ao limpar interval:', error);
+        }
+      };
+    } catch (error) {
+      console.warn('Erro no auto-play:', error);
+    }
+  }, [isAutoPlay, isPaused, autores.length, visibleCards, mounted]);
 
   const nextSlide = useCallback(() => {
     const maxIndex = Math.max(0, autores.length - visibleCards);
@@ -154,20 +185,49 @@ export default function AutoresCarrossel() {
 
   // Keyboard navigation
   useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'ArrowLeft') {
-        prevSlide();
-      } else if (e.key === 'ArrowRight') {
-        nextSlide();
-      } else if (e.key === ' ') {
-        e.preventDefault();
-        toggleAutoPlay();
+    if (!mounted || !isClient || typeof window === 'undefined') return;
+
+    try {
+      const handleKeyDown = (e) => {
+        if (e.key === 'ArrowLeft') {
+          prevSlide();
+        } else if (e.key === 'ArrowRight') {
+          nextSlide();
+        } else if (e.key === ' ') {
+          e.preventDefault();
+          toggleAutoPlay();
+        }
+      };
+
+      window.addEventListener('keydown', handleKeyDown);
+      
+      return () => {
+        try {
+          if (typeof window !== 'undefined') {
+            window.removeEventListener('keydown', handleKeyDown);
+          }
+        } catch (error) {
+          console.warn('Erro ao remover event listener de teclado:', error);
+        }
+      };
+    } catch (error) {
+      console.warn('Erro ao configurar event listener de teclado:', error);
+    }
+  }, [nextSlide, prevSlide, mounted, isClient]);
+
+  // Cleanup final quando o componente desmonta
+  useEffect(() => {
+    return () => {
+      try {
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
+        }
+      } catch (error) {
+        console.warn('Erro no cleanup final:', error);
       }
     };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [nextSlide, prevSlide]);
+  }, []);
 
   if (loading) {
     return (

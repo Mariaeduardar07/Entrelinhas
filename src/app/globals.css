@@ -18,4 +18,34 @@ body {
   --cor-1: #fffbf5;
   --cor-do-banner: #2c3838;
   --cor-3-detalhes: #043222;
+  
+  /* Cores adicionais para HeroSection */
+  --cor-0: #f6f4f0;
+  --cor-2: #a3887b;
+  --cor-3: #556877;
+  --cor-4: #2d3047;
+  --cor-5: #2c3838;
+  
+  /* Espaçamentos */
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  
+  /* Raios de borda */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  
+  /* Sombras */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  
+  /* Fontes */
+  --font-heading: 'Cormorant Garamond', serif;
 }
