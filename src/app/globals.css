@@ -4,17 +4,17 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: var(--cor-0);
+  background: var(--cor-do-fundo);
 }
+
 :root {
-  --cor-0: #f6f4f0;
-  --cor-1: #f6f4f0;
-  --cor-2: #2c3838;
-  --cor-3: #2c3838;
-  --cor-4: #2c3838;
-  --cor-5: #2c3838;
+  --cor-do-fundo: #f6f4f0;
+  --cor-1: #fffbf5;
+  --cor-do-banner: #2c3838;
+  --cor-3-detalhes: #043222;
 }

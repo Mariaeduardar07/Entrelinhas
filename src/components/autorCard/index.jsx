@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BookOpen } from "lucide-react";
 import styles from "./autorCard.module.css";
 
 export default function AutorCard({ autor }) {
@@ -18,20 +19,48 @@ export default function AutorCard({ autor }) {
   };
 
   return (
-    <Link href={`/autores/${autor.id}`} className={styles.card}>
-      <div className={styles.imageContainer}>
-        <img
-          src={getImageUrl(autor)}
-          alt={autor.nome}
-          className={styles.image}
-          onError={(e) => {
-            e.target.src = fallbackImage;
-          }}
-        />
-      </div>
-      <div className={styles.content}>
-        <h3 className={styles.name}>{autor.nome}</h3>
-      </div>
-    </Link>
+    <div className={styles.cardWrapper}>
+      <Link href={`/autores/${autor.id}`} className={styles.card}>
+        {/* Background Pattern */}
+        <div className={styles.cardBackground}>
+          <div className={styles.geometricPattern}></div>
+          <div className={styles.gradientOverlay}></div>
+        </div>
+
+        {/* Main Content Container */}
+        <div className={styles.contentContainer}>
+          {/* Image Section with Innovative Frame */}
+          <div className={styles.imageSection}>
+            <div className={styles.imageFrame}>
+              <img
+                src={getImageUrl(autor)}
+                alt={autor.nome}
+                className={styles.authorImage}
+                onError={(e) => {
+                  e.target.src = fallbackImage;
+                }}
+              />
+            </div>
+            
+            {/* Decorative Elements - REMOVED */}
+          </div>
+
+          {/* Text Content with Animation */}
+          <div className={styles.textContent}>
+            <div className={styles.nameContainer}>
+              <h3 className={styles.authorName}>{autor.nome}</h3>
+              <div className={styles.nameUnderline}></div>
+            </div>
+            
+            <div className={styles.metadata}>
+              <div className={styles.badge}>
+                <BookOpen size={14} />
+                <span>Explorar</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Link>
+    </div>
   );
 }

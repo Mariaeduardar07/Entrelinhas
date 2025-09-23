@@ -16,7 +16,7 @@
   flex-direction: column;
   justify-content: center;
   color: var(--cor-1);
-  background: var(--cor-5);
+  background: var(--cor-do-banner);
   position: relative;
 }
 
