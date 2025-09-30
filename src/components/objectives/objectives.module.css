@@ -78,7 +78,9 @@
 .icon {
   font-size: 2.5rem;
   margin-bottom: 1rem;
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   filter: drop-shadow(0 2px 4px rgba(163, 143, 133, 0.2));
   background: transparent;
 }
