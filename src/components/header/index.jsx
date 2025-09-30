@@ -1,6 +1,8 @@
 "use client";
 
+
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./header.module.css";
 
 export default function Header() {
@@ -8,6 +10,13 @@ export default function Header() {
     <header className={styles.header}>
       <div className={styles.headerContent}>
         <div className={styles.logo}>
+          <Image
+            src="/image/logo.png"
+            alt="Logo EntreLinhas"
+            width={40}
+            height={40}
+            className={styles.logoImg}
+          />
           <h1 className={styles.title}>EntreLinhas</h1>
         </div>
         <nav className={styles.nav}>

@@ -1,11 +1,17 @@
+.logoImg {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  margin-right: 0.75rem;
+}
 
 .header {
-  background: rgba(246, 244, 240, 0.95);
+  background: #f6f4f0f2;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 2px 12px rgba(44, 56, 56, 0.1);
   border-bottom: 1px solid rgba(44, 56, 56, 0.1);
-  padding: 1.2rem 0;
+  padding: 0.5rem 0;
   position: sticky;
   top: 0;
   width: 100%;

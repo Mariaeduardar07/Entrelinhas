@@ -9,7 +9,7 @@
     min-height: 100vh;
     display: flex;
     align-items: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--cor-do-fundo) 0%, var(--cor-1) 100%);
     position: relative;
     overflow: hidden;
 }
@@ -21,8 +21,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%);
+    background: radial-gradient(circle at 20% 80%, rgba(163, 136, 123, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(85, 104, 119, 0.08) 0%, transparent 50%);
 }
 
 .heroContent {
@@ -41,12 +41,11 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: var(--cor-1);
+    border: 1px solid var(--cor-2);
     padding: 8px 16px;
     border-radius: 50px;
-    color: white;
+    color: var(--cor-3-detalhes);
     font-size: 0.9rem;
     font-weight: 500;
     margin-bottom: 24px;
@@ -56,13 +55,13 @@
 .heroTitle {
     font-size: 3.5rem;
     font-weight: 700;
-    color: white;
+    color: var(--cor-do-banner);
     margin: 0 0 24px 0;
     line-height: 1.1;
 }
 
 .highlight {
-    background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+    background: linear-gradient(135deg, var(--cor-2), var(--cor-3-detalhes));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -71,7 +70,7 @@
 .heroDescription {
     font-size: 1.3rem;
     line-height: 1.6;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--cor-3);
     margin-bottom: 40px;
     max-width: 500px;
 }
@@ -89,14 +88,14 @@
     display: block;
     font-size: 2.5rem;
     font-weight: 700;
-    color: #ffd93d;
+    color: var(--cor-2);
     line-height: 1;
 }
 
 .statLabel {
     display: block;
     font-size: 1rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--cor-3-detalhes);
     margin-top: 8px;
 }
 
@@ -126,7 +125,7 @@
     left: -20px;
     right: -20px;
     bottom: -20px;
-    background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+    background: linear-gradient(135deg, var(--cor-2), var(--cor-3-detalhes));
     border-radius: 50%;
     z-index: -1;
     filter: blur(30px);
@@ -142,7 +141,7 @@
 /* Skills Section */
 .skillsSection {
     padding: 100px 20px;
-    background: #f8fafc;
+    background: var(--cor-1);
 }
 
 .skillsContainer {
@@ -153,7 +152,7 @@
 .sectionTitle {
     font-size: 2.5rem;
     font-weight: 700;
-    color: var(--cor-texto-primario);
+    color: var(--cor-do-banner);
     text-align: center;
     margin-bottom: 60px;
     position: relative;
@@ -167,7 +166,7 @@
     transform: translateX(-50%);
     width: 60px;
     height: 4px;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: linear-gradient(135deg, var(--cor-2), var(--cor-3-detalhes));
     border-radius: 2px;
 }
 
@@ -178,13 +177,13 @@
 }
 
 .skillCategory {
-    background: white;
+    background: var(--cor-1);
     padding: 40px 30px;
     border-radius: 20px;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(44, 56, 56, 0.08);
     transition: all 0.3s ease;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--cor-2);
 }
 
 .skillCategory:hover {
@@ -219,8 +218,8 @@
 }
 
 .skillTags span {
-    background: #f1f5f9;
-    color: #475569;
+    background: var(--cor-0);
+    color: var(--cor-3);
     padding: 6px 14px;
     border-radius: 20px;
     font-size: 0.9rem;
@@ -229,15 +228,15 @@
 }
 
 .skillTags span:hover {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
+    background: linear-gradient(135deg, var(--cor-2), var(--cor-3-detalhes));
+    color: var(--cor-do-banner);
     transform: translateY(-2px);
 }
 
 /* Projects Section */
 .projectsSection {
     padding: 100px 20px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--cor-1) 0%, var(--cor-do-fundo) 100%);
     position: relative;
 }
 
@@ -247,11 +246,11 @@
 }
 
 .projectsSection .sectionTitle {
-    color: white;
+    color: var(--cor-do-banner);
 }
 
 .projectsSection .sectionTitle::after {
-    background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+    background: linear-gradient(135deg, var(--cor-2), var(--cor-3-detalhes));
 }
 
 .projectsGrid {
@@ -261,9 +260,8 @@
 }
 
 .projectCard {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: var(--cor-1);
+    border: 1px solid var(--cor-2);
     border-radius: 20px;
     padding: 30px;
     transition: all 0.3s ease;
@@ -272,13 +270,14 @@
 
 .projectCard:hover {
     transform: translateY(-8px);
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    background: var(--cor-0);
+    box-shadow: 0 20px 40px rgba(44, 56, 56, 0.12);
 }
 
+
 .featured {
-    border: 2px solid #ffd93d;
-    background: rgba(255, 217, 61, 0.1);
+    border: 2px solid var(--cor-2);
+    background: var(--cor-0);
 }
 
 .featuredBadge {
