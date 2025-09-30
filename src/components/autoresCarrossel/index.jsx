@@ -144,9 +144,7 @@ export default function AutoresCarrossel() {
     );
   }, [autores.length, visibleCards]);
 
-  const goToSlide = useCallback((index) => {
-    setCurrentIndex(index);
-  }, []);
+
 
   const toggleAutoPlay = () => {
     setIsAutoPlay(!isAutoPlay);
@@ -247,7 +245,7 @@ export default function AutoresCarrossel() {
     return (
       <section className={styles.section}>
         <div className={styles.container}>
-          <h2 className={styles.title}>Nossos Autores</h2>
+          <h2 className={styles.title}>Explore os autores</h2>
           <div className={styles.error}>
             <p>{error}</p>
             <button 
