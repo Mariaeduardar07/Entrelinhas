@@ -132,16 +132,22 @@ export default function AutoresCarrossel() {
 
   const nextSlide = useCallback(() => {
     const maxIndex = Math.max(0, autores.length - visibleCards);
-    setCurrentIndex(prevIndex => 
-      prevIndex >= maxIndex ? 0 : prevIndex + 1
-    );
+    setCurrentIndex(prevIndex => {
+      if (prevIndex >= maxIndex) {
+        return 0;
+      }
+      return prevIndex + 1;
+    });
   }, [autores.length, visibleCards]);
 
   const prevSlide = useCallback(() => {
     const maxIndex = Math.max(0, autores.length - visibleCards);
-    setCurrentIndex(prevIndex => 
-      prevIndex <= 0 ? maxIndex : prevIndex - 1
-    );
+    setCurrentIndex(prevIndex => {
+      if (prevIndex <= 0) {
+        return maxIndex;
+      }
+      return prevIndex - 1;
+    });
   }, [autores.length, visibleCards]);
 
 
@@ -287,7 +293,6 @@ export default function AutoresCarrossel() {
               Descubra os grandes escritores e suas histórias fascinantes
             </p>
           </div>
-          
           <div className={styles.controls}>
             <button
               className={styles.autoPlayButton}
@@ -306,8 +311,9 @@ export default function AutoresCarrossel() {
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}
         >
-          {/* Botão Anterior */}
+          {/* Botão Anterior (esquerda) */}
           <button
             className={`${styles.navButton} ${styles.prevButton} ${!canGoPrev ? styles.disabled : ''}`}
             onClick={prevSlide}
@@ -341,12 +347,24 @@ export default function AutoresCarrossel() {
             </div>
           </div>
 
-          {/* Botão Próximo */}
+          {/* Botão Próximo (direita) */}
           <button
             className={`${styles.navButton} ${styles.nextButton} ${!canGoNext ? styles.disabled : ''}`}
             onClick={nextSlide}
             disabled={!canGoNext}
             aria-label="Próximo autor"
+          >
+            <ChevronRight size={24} />
+          </button>
+        </div>
+
+        {/* Segundo conjunto de botões abaixo do carrossel */}
+        <div className={styles.bottomButtons}>
+          <button
+            className={`${styles.navButton} ${styles.nextButton} ${!canGoNext ? styles.disabled : ''}`}
+            onClick={nextSlide}
+            disabled={!canGoNext}
+            aria-label="Próximo autor (inferior)"
           >
             <ChevronRight size={24} />
           </button>
