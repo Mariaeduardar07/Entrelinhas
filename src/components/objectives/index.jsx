@@ -3,24 +3,29 @@ import styles from "./objectives.module.css";
 export default function Objectives() {
   const objectives = [
     {
-      icon: "📚",
-      title: "Valorizar Autores",
-      description: "Destacar a vida e obra de grandes escritores, preservando suas contribuições para a literatura mundial."
+      icon: "�",
+      title: "Valorizar a Literatura Brasileira",
+      description: "Valorizar a literatura brasileira e dar mais visibilidade aos autores nacionais."
     },
     {
-      icon: "🎓",
-      title: "Educação Literária", 
-      description: "Proporcionar uma experiência educativa e interativa para estudantes e amantes da literatura."
+      icon: "🔎",
+      title: "Facilitar o Acesso",
+      description: "Facilitar o acesso a informações sobre livros, personagens e períodos históricos."
     },
     {
-      icon: "🌍",
-      title: "Contexto Histórico",
-      description: "Conectar obras literárias com seus períodos históricos, oferecendo uma visão ampla da evolução cultural."
+      icon: "✨",
+      title: "Incentivar a Leitura",
+      description: "Incentivar a leitura com recomendações personalizadas e curiosidades literárias."
     },
     {
-      icon: "💡",
-      title: "Descobertas",
-      description: "Revelar curiosidades e fatos interessantes sobre autores e suas obras que você talvez não conhecia."
+      icon: "⭐",
+      title: "Lista de Favoritos",
+      description: "Permitir que cada leitor crie sua lista de favoritos para futuras leituras."
+    },
+    {
+      icon: "🌟",
+      title: "Descoberta Inspiradora",
+      description: "Tornar a descoberta da literatura nacional simples, interessante e inspiradora."
     }
   ];
 
@@ -29,13 +34,19 @@ export default function Objectives() {
       <div className={styles.container}>
         <h2 className={styles.title}>Nossos Objetivos</h2>
         <div className={styles.grid}>
-          {objectives.map((objective, index) => (
-            <div key={index} className={styles.card}>
-              <div className={styles.icon}>{objective.icon}</div>
-              <h3 className={styles.cardTitle}>{objective.title}</h3>
-              <p className={styles.description}>{objective.description}</p>
-            </div>
-          ))}
+          {objectives.map((objective, index) => {
+            // Centraliza os dois últimos cards na segunda linha
+            let cardStyle = {};
+            if (index === 3) cardStyle.gridColumn = "2 / 3";
+            if (index === 4) cardStyle.gridColumn = "3 / 4";
+            return (
+              <div key={index} className={styles.card} style={cardStyle}>
+                <div className={styles.icon}>{objective.icon}</div>
+                <h3 className={styles.cardTitle}>{objective.title}</h3>
+                <p className={styles.description}>{objective.description}</p>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
