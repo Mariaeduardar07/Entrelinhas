@@ -20,6 +20,7 @@ export default function AutoresPage() {
       setAutores(response.data);
       toast.success("Autores carregados!");
     } catch (error) {
+      console.error("Erro ao carregar autores:", error);
       toast.error("Erro ao carregar autores.");
     } finally {
       setLoading(false);
@@ -55,7 +56,7 @@ export default function AutoresPage() {
     // Se já é uma URL completa ou caminho absoluto, usa como está
     return autor.imageUrl;
   };
-
+  
   return (
     <div className={styles.container}>
       <div className={styles.header}>

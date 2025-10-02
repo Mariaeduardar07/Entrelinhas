@@ -9,6 +9,7 @@ import styles from "./detalhes.module.css";
 
 export default function DetalhesAutor() {
   const [autor, setAutor] = useState(null);
+  const [livros, setLivros] = useState([]);
   const [loading, setLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
   const router = useRouter();
@@ -17,12 +18,27 @@ export default function DetalhesAutor() {
   useEffect(() => {
     const buscarDetalhes = async () => {
       try {
-        const response = await axios.get(
+        setLoading(true);
+        
+        // Busca dados do autor
+        const autorResponse = await axios.get(
           `http://localhost:5000/author/${params.id}`
         );
-        setAutor(response.data);
+        setAutor(autorResponse.data);
+        
+        // Busca todos os livros
+        const livrosResponse = await axios.get("http://localhost:5000/book");
+        console.log("✅ TODOS OS LIVROS:", livrosResponse.data);
+        
+        // Filtra livros do autor atual
+        const livrosDoAutor = livrosResponse.data.filter(livro => 
+          livro.authorId === parseInt(params.id)
+        );
+        console.log("📚 LIVROS DO AUTOR:", livrosDoAutor);
+        setLivros(livrosDoAutor);
+        
       } catch (error) {
-        console.error("Erro ao buscar detalhes:", error);
+        console.error("Erro ao buscar dados:", error);
       } finally {
         setLoading(false);
       }
@@ -44,6 +60,17 @@ export default function DetalhesAutor() {
     
     // Se já é uma URL completa ou caminho absoluto, usa como está
     return autor.imageUrl;
+  };
+
+  // Processa a imageUrl dos livros
+  const getBookImageUrl = (livro) => {
+    if (!livro.imageUrl) return '/image/imgBanner.png';
+    
+    if (livro.imageUrl.startsWith('public/')) {
+      return '/' + livro.imageUrl.substring(7);
+    }
+    
+    return livro.imageUrl;
   };
 
   // Função para verificar se uma URL de imagem é válida
@@ -132,12 +159,10 @@ export default function DetalhesAutor() {
               </div> 
 
               <div className={styles.cardMeta}>
-                {autor.books && autor.books.length > 0 && (
-                  <span className={styles.badge}>
-                    <BookOpen size={12} />
-                    {autor.books.length} {autor.books.length === 1 ? 'livro' : 'livros'}
-                  </span>
-                )}
+                <span className={styles.badge}>
+                  <BookOpen size={12} />
+                  {livros.length} {livros.length === 1 ? 'livro' : 'livros'}
+                </span>
               </div>
 
               <div className={styles.detailItem}>
@@ -147,17 +172,47 @@ export default function DetalhesAutor() {
                 </span>
               </div>
 
-              {autor.books && autor.books.length > 0 && (
+              {/* Seção de Livros da API */}
+              {livros.length > 0 && (
                 <div className={styles.detailItem}>
-                  <span className={styles.label}>Obras Principais:</span>
-                  <div className={styles.booksList}>
-                    {autor.books.map((book, index) => (
-                      <div key={index} className={styles.bookItem}>
-                        <BookOpen size={16} />
-                        <span>{book.title}</span>
+                  <span className={styles.label}>Obras do Autor:</span>
+                  <div className={styles.livrosGrid}>
+                    {livros.map((livro) => (
+                      <div key={livro.id} className={styles.livroCard}>
+                        <div className={styles.livroImageWrapper}>
+                          <img 
+                            src={getBookImageUrl(livro)}
+                            alt={livro.nome || livro.title}
+                            className={styles.livroImage}
+                            onError={(e) => {
+                              e.target.src = '/image/imgBanner.png';
+                            }}
+                          />
+                        </div>
+                        <div className={styles.livroInfo}>
+                          <h4 className={styles.livroTitulo}>{livro.nome || livro.title}</h4>
+                          {livro.description && (
+                            <p className={styles.livroDescricao}>
+                              {livro.description.substring(0, 150)}...
+                            </p>
+                          )}
+                          {livro.publicationDate && (
+                            <p className={styles.livroData}>
+                              <Clock size={14} />
+                              {new Date(livro.publicationDate).getFullYear()}
+                            </p>
+                          )}
+                        </div>
                       </div>
                     ))}
                   </div>
+                </div>
+              )}
+
+              {livros.length === 0 && (
+                <div className={styles.detailItem}>
+                  <span className={styles.label}>Obras:</span>
+                  <span className={styles.placeholder}>Nenhum livro encontrado para este autor</span>
                 </div>
               )}
             </div>

@@ -288,6 +288,71 @@
   gap: 1.2rem;
 }
 
+/* Seção de Livros */
+.livrosSection {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.livrosTitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--cor-3-detalhes);
+  margin: 0 0 0.8rem 0;
+}
+
+.livrosGrid {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.livroItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 80px;
+}
+
+.livroImage {
+  width: 60px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease;
+  border: 1px solid rgba(163, 136, 123, 0.2);
+}
+
+.livroImage:hover {
+  transform: scale(1.05);
+}
+
+.livroNome {
+  font-size: 0.75rem;
+  color: var(--cor-do-banner);
+  margin: 0.4rem 0 0 0;
+  line-height: 1.2;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.semLivros {
+  color: var(--cor-3-detalhes);
+  font-size: 0.9rem;
+  font-style: italic;
+  opacity: 0.7;
+  margin: 0;
+}
+
 .autorNome {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.8rem;
