@@ -11,12 +11,6 @@ export default function AutoresCarrossel() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAutoPlay, setIsAutoPlay] = useState(true);
-  const [isPaused, setIsPaused] = useState(false);
-  const [touchStart, setTouchStart] = useState(0);
-  const [touchEnd, setTouchEnd] = useState(0);
-  const carrosselRef = useRef(null);
-  const intervalRef = useRef(null);
 
   useEffect(() => {
     const fetchAutores = async () => {
@@ -32,6 +26,7 @@ export default function AutoresCarrossel() {
         });
         
         console.log("Dados da API:", response.data);
+        console.log("Total de autores recebidos:", response.data?.length);
         setAutores(response.data || []);
       } catch (err) {
         console.error("Erro detalhado ao buscar autores:", err);
@@ -53,185 +48,16 @@ export default function AutoresCarrossel() {
     fetchAutores();
   }, []);
 
-  const getVisibleCards = useCallback(() => {
-    if (typeof window === 'undefined') return 4;
-    const width = window.innerWidth;
-    if (width >= 1200) return 4;
-    if (width >= 768) return 3;
-    if (width >= 480) return 2;
-    return 1;
-  }, []);
-
-  const [visibleCards, setVisibleCards] = useState(4);
-  const [mounted, setMounted] = useState(false);
-  const [isClient, setIsClient] = useState(false);
-
-  // Prevent hydration mismatch
-  useEffect(() => {
-    try {
-      setMounted(true);
-      setIsClient(typeof window !== 'undefined');
-    } catch (error) {
-      console.warn('Erro na hidratação do componente:', error);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!mounted || !isClient || typeof window === 'undefined') return;
-    
-    try {
-      const handleResize = () => {
-        if (typeof window !== 'undefined') {
-          setVisibleCards(getVisibleCards());
-        }
-      };
-
-      handleResize();
-      window.addEventListener("resize", handleResize);
-      
-      return () => {
-        try {
-          if (typeof window !== 'undefined') {
-            window.removeEventListener("resize", handleResize);
-          }
-        } catch (error) {
-          console.warn('Erro ao remover event listener:', error);
-        }
-      };
-    } catch (error) {
-      console.warn('Erro ao configurar event listener de resize:', error);
-    }
-  }, [mounted, isClient, getVisibleCards]);
-
-  // Auto-play functionality
-  useEffect(() => {
-    if (!isAutoPlay || isPaused || autores.length === 0 || !mounted) return;
-
-    try {
-      intervalRef.current = setInterval(() => {
-        setCurrentIndex(prevIndex => {
-          const maxIndex = Math.max(0, autores.length - visibleCards);
-          return prevIndex >= maxIndex ? 0 : prevIndex + 1;
-        });
-      }, 4000); // Muda a cada 4 segundos
-
-      return () => {
-        try {
-          if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-            intervalRef.current = null;
-          }
-        } catch (error) {
-          console.warn('Erro ao limpar interval:', error);
-        }
-      };
-    } catch (error) {
-      console.warn('Erro no auto-play:', error);
-    }
-  }, [isAutoPlay, isPaused, autores.length, visibleCards, mounted]);
-
-  const nextSlide = useCallback(() => {
-    const maxIndex = Math.max(0, autores.length - visibleCards);
-    setCurrentIndex(prevIndex => {
-      if (prevIndex >= maxIndex) {
-        return 0;
-      }
-      return prevIndex + 1;
-    });
-  }, [autores.length, visibleCards]);
-
-  const prevSlide = useCallback(() => {
-    const maxIndex = Math.max(0, autores.length - visibleCards);
-    setCurrentIndex(prevIndex => {
-      if (prevIndex <= 0) {
-        return maxIndex;
-      }
-      return prevIndex - 1;
-    });
-  }, [autores.length, visibleCards]);
-
-
-
-  const toggleAutoPlay = () => {
-    setIsAutoPlay(!isAutoPlay);
+  // Funções simples de navegação
+  const nextSlide = () => {
+    const totalGroups = Math.ceil(autores.length / 3);
+    setCurrentIndex(currentIndex === totalGroups - 1 ? 0 : currentIndex + 1);
   };
 
-  const handleMouseEnter = () => {
-    setIsPaused(true);
+  const prevSlide = () => {
+    const totalGroups = Math.ceil(autores.length / 3);
+    setCurrentIndex(currentIndex === 0 ? totalGroups - 1 : currentIndex - 1);
   };
-
-  const handleMouseLeave = () => {
-    setIsPaused(false);
-  };
-
-  // Touch handlers para dispositivos móveis
-  const handleTouchStart = (e) => {
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchMove = (e) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
-
-    if (isLeftSwipe) {
-      nextSlide();
-    } else if (isRightSwipe) {
-      prevSlide();
-    }
-  };
-
-  // Keyboard navigation
-  useEffect(() => {
-    if (!mounted || !isClient || typeof window === 'undefined') return;
-
-    try {
-      const handleKeyDown = (e) => {
-        if (e.key === 'ArrowLeft') {
-          prevSlide();
-        } else if (e.key === 'ArrowRight') {
-          nextSlide();
-        } else if (e.key === ' ') {
-          e.preventDefault();
-          toggleAutoPlay();
-        }
-      };
-
-      window.addEventListener('keydown', handleKeyDown);
-      
-      return () => {
-        try {
-          if (typeof window !== 'undefined') {
-            window.removeEventListener('keydown', handleKeyDown);
-          }
-        } catch (error) {
-          console.warn('Erro ao remover event listener de teclado:', error);
-        }
-      };
-    } catch (error) {
-      console.warn('Erro ao configurar event listener de teclado:', error);
-    }
-  }, [nextSlide, prevSlide, mounted, isClient]);
-
-  // Cleanup final quando o componente desmonta
-  useEffect(() => {
-    return () => {
-      try {
-        if (intervalRef.current) {
-          clearInterval(intervalRef.current);
-          intervalRef.current = null;
-        }
-      } catch (error) {
-        console.warn('Erro no cleanup final:', error);
-      }
-    };
-  }, []);
 
   if (loading) {
     return (
@@ -272,103 +98,52 @@ export default function AutoresCarrossel() {
         <div className={styles.container}>
           <h2 className={styles.title}>Nossos Autores</h2>
           <div className={styles.empty}>
-            <p>Nenhum autor encontrado</p>
+            <p>Nenhum autor encontrado no servidor</p>
           </div>
         </div>
       </section>
     );
   }
 
-  const totalSlides = Math.max(0, autores.length - visibleCards);
-  const canGoPrev = currentIndex > 0;
-  const canGoNext = currentIndex < totalSlides;
-
   return (
     <section className={styles.section}>
       <div className={styles.container}>
         <div className={styles.header}>
-          <div className={styles.titleContainer}>
-            <h2 className={styles.title}>Explore os Autores</h2>
-            <p className={styles.subtitle}>
-              Descubra os grandes escritores e suas histórias fascinantes
-            </p>
-          </div>
-          <div className={styles.controls}>
-            <button
-              className={styles.autoPlayButton}
-              onClick={toggleAutoPlay}
-              title={isAutoPlay ? "Pausar rotação automática" : "Iniciar rotação automática"}
-            >
-              {isAutoPlay ? <Pause size={20} /> : <Play size={20} />}
-            </button>
-          </div>
+          <h2 className={styles.title}>Explore os Autores</h2>
         </div>
 
-        <div 
-          className={styles.carrosselContainer}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}
-        >
-          {/* Botão Anterior (esquerda) */}
-          <button
-            className={`${styles.navButton} ${styles.prevButton} ${!canGoPrev ? styles.disabled : ''}`}
-            onClick={prevSlide}
-            disabled={!canGoPrev}
-            aria-label="Autor anterior"
-          >
+        {/* Carrossel SUPER SIMPLES */}
+        <div className={styles.carrosselContainer}>
+          <button onClick={prevSlide} className={styles.navButton}>
             <ChevronLeft size={24} />
           </button>
-
-          {/* Carrossel */}
-          <div className={styles.carrossel} ref={carrosselRef}>
-            <div
+          
+          <div className={styles.carrossel}>
+            <div 
               className={styles.carrosselTrack}
               style={{
-                transform: `translateX(-${currentIndex * (100 / visibleCards)}%)`,
-                width: `${(autores.length / visibleCards) * 100}%`
+                transform: `translateX(-${currentIndex * 100}%)`,
+                transition: 'transform 0.3s ease'
               }}
             >
-              {autores.map((autor, index) => (
-                <div 
-                  key={autor.id} 
-                  className={`${styles.carrosselItem} ${
-                    index >= currentIndex && index < currentIndex + visibleCards 
-                      ? styles.active 
-                      : ''
-                  }`}
-                >
-                  <AutorCard autor={autor} />
+              {Array.from({ length: Math.ceil(autores.length / 3) }).map((_, groupIndex) => (
+                <div key={groupIndex} className={styles.grupo}>
+                  {autores.slice(groupIndex * 3, (groupIndex + 1) * 3).map((autor) => (
+                    <div key={autor.id} className={styles.item}>
+                      <AutorCard autor={autor} />
+                    </div>
+                  ))}
                 </div>
               ))}
             </div>
           </div>
-
-          {/* Botão Próximo (direita) */}
-          <button
-            className={`${styles.navButton} ${styles.nextButton} ${!canGoNext ? styles.disabled : ''}`}
-            onClick={nextSlide}
-            disabled={!canGoNext}
-            aria-label="Próximo autor"
-          >
+          
+          <button onClick={nextSlide} className={styles.navButton}>
             <ChevronRight size={24} />
           </button>
         </div>
 
-        {/* Segundo conjunto de botões abaixo do carrossel */}
-        <div className={styles.bottomButtons}>
-          <button
-            className={`${styles.navButton} ${styles.nextButton} ${!canGoNext ? styles.disabled : ''}`}
-            onClick={nextSlide}
-            disabled={!canGoNext}
-            aria-label="Próximo autor (inferior)"
-          >
-            <ChevronRight size={24} />
-          </button>
-        </div>
+
       </div>
     </section>
   );
