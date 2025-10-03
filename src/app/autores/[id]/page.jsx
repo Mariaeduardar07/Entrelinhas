@@ -1,19 +1,22 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useState, useEffect, use } from "react";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import Image from "next/image";
-import { BookOpen, Clock, Lightbulb } from "lucide-react"; // Ícones para autores
+import { BookOpen, Clock, Lightbulb, Heart } from "lucide-react"; // Ícones para autores
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import styles from "./detalhes.module.css";
 
-export default function DetalhesAutor() {
+export default function DetalhesAutor({ params }) {
+  const resolvedParams = use(params);
   const [autor, setAutor] = useState(null);
   const [livros, setLivros] = useState([]);
   const [loading, setLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
+  const [isFavorito, setIsFavorito] = useState(false);
   const router = useRouter();
-  const params = useParams();
 
   useEffect(() => {
     const buscarDetalhes = async () => {
@@ -22,7 +25,7 @@ export default function DetalhesAutor() {
         
         // Busca dados do autor
         const autorResponse = await axios.get(
-          `http://localhost:5000/author/${params.id}`
+          `http://localhost:5000/author/${resolvedParams.id}`
         );
         setAutor(autorResponse.data);
         
@@ -32,10 +35,14 @@ export default function DetalhesAutor() {
         
         // Filtra livros do autor atual
         const livrosDoAutor = livrosResponse.data.filter(livro => 
-          livro.authorId === parseInt(params.id)
+          livro.authorId === parseInt(resolvedParams.id)
         );
         console.log("📚 LIVROS DO AUTOR:", livrosDoAutor);
         setLivros(livrosDoAutor);
+        
+        // Verifica se o autor está nos favoritos
+        const favoritosIds = JSON.parse(localStorage.getItem('autoresFavoritos') || '[]');
+        setIsFavorito(favoritosIds.includes(parseInt(resolvedParams.id)));
         
       } catch (error) {
         console.error("Erro ao buscar dados:", error);
@@ -44,10 +51,10 @@ export default function DetalhesAutor() {
       }
     };
 
-    if (params.id) {
+    if (resolvedParams.id) {
       buscarDetalhes();
     }
-  }, [params.id]);
+  }, [resolvedParams.id]);
 
   // Processa a imageUrl do backend
   const getImageUrl = (autor) => {
@@ -71,6 +78,44 @@ export default function DetalhesAutor() {
     }
     
     return livro.imageUrl;
+  };
+
+  // Alterna favorito do autor
+  const toggleFavorito = () => {
+    const favoritosIds = JSON.parse(localStorage.getItem('autoresFavoritos') || '[]');
+    const autorId = parseInt(resolvedParams.id);
+    
+    if (isFavorito) {
+      // Remove dos favoritos
+      const novosIds = favoritosIds.filter(id => id !== autorId);
+      localStorage.setItem('autoresFavoritos', JSON.stringify(novosIds));
+      setIsFavorito(false);
+      toast.success("Autor removido dos favoritos!");
+    } else {
+      // Adiciona aos favoritos
+      const novosIds = [...favoritosIds, autorId];
+      localStorage.setItem('autoresFavoritos', JSON.stringify(novosIds));
+      setIsFavorito(true);
+      toast.success("Autor adicionado aos favoritos!");
+    }
+  };
+
+  // Adiciona livro aos favoritos
+  const toggleLivroFavorito = (livro) => {
+    const favoritosIds = JSON.parse(localStorage.getItem('livrosFavoritos') || '[]');
+    const livroId = livro.id;
+    
+    if (favoritosIds.includes(livroId)) {
+      // Remove dos favoritos
+      const novosIds = favoritosIds.filter(id => id !== livroId);
+      localStorage.setItem('livrosFavoritos', JSON.stringify(novosIds));
+      toast.success("Livro removido dos favoritos!");
+    } else {
+      // Adiciona aos favoritos
+      const novosIds = [...favoritosIds, livroId];
+      localStorage.setItem('livrosFavoritos', JSON.stringify(novosIds));
+      toast.success("Livro adicionado aos favoritos!");
+    }
   };
 
   // Função para verificar se uma URL de imagem é válida
@@ -137,9 +182,18 @@ export default function DetalhesAutor() {
           </div>
 
           <div className={styles.titleSection}>
-            <h1 className={styles.title}>
-              {autor.nome || <span className={styles.value}>Nome não disponível</span>}
-            </h1>
+            <div className={styles.titleContainer}>
+              <h1 className={styles.title}>
+                {autor.nome || <span className={styles.value}>Nome não disponível</span>}
+              </h1>
+              <button 
+                onClick={toggleFavorito}
+                className={`${styles.favoriteButton} ${isFavorito ? styles.favorited : ''}`}
+                title={isFavorito ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+              >
+                <Heart size={24} fill={isFavorito ? "#e74c3c" : "none"} />
+              </button>
+            </div>
           </div>
 
           <div className={styles.infoSection}>
@@ -179,6 +233,14 @@ export default function DetalhesAutor() {
                   <div className={styles.livrosGrid}>
                     {livros.map((livro) => (
                       <div key={livro.id} className={styles.livroCard}>
+                        <button 
+                          onClick={() => toggleLivroFavorito(livro)}
+                          className={styles.livroFavoriteButton}
+                          title="Adicionar/Remover dos favoritos"
+                        >
+                          <Heart size={16} />
+                        </button>
+                        
                         <div className={styles.livroImageWrapper}>
                           <img 
                             src={getBookImageUrl(livro)}
@@ -219,6 +281,19 @@ export default function DetalhesAutor() {
           </div>
         </div>
       </div>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 }

@@ -32,6 +32,11 @@ export default function Header() {
               </Link>
             </li>
             <li className={styles.navItem}>
+              <Link href="/livros" className={styles.navLink}>
+                Livros
+              </Link>
+            </li>
+            <li className={styles.navItem}>
               <Link href="/sobre" className={styles.navLink}>
                 Sobre Mim
               </Link>
