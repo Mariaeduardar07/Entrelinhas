@@ -11,13 +11,11 @@
 
 .header {
   position: relative;
-  max-width: 1200px;
-  margin: 0 auto;
   text-align: center;
   padding: 4rem 2rem 2rem;
   background: 
     linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(246, 244, 240, 0.8) 100%);
-  border-radius: 0 0 32px 32px;
+  border-radius: 0;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
   margin-bottom: 2rem;
@@ -81,7 +79,7 @@
   min-height: 60vh;
   gap: 1.5rem;
   background: rgba(255, 255, 255, 0.5);
-  border-radius: 24px;
+  border-radius: 0;
   margin: 2rem;
   backdrop-filter: blur(10px);
 }
@@ -109,8 +107,7 @@
   display: flex;
   justify-content: center;
   gap: 1rem;
-  margin: 0 auto 3rem;
-  max-width: 1200px;
+  margin-bottom: 3rem;
   padding: 0 2rem;
 }
 
@@ -121,7 +118,7 @@
   padding: 1rem 2rem;
   background: rgba(255, 255, 255, 0.7);
   border: 2px solid rgba(163, 136, 123, 0.2);
-  border-radius: 50px;
+  border-radius: 0;
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.1rem;
   font-weight: 600;
@@ -146,15 +143,13 @@
 
 /* Conteúdo */
 .content {
-  max-width: 1200px;
-  margin: 0 auto;
   padding: 0 2rem;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
+  gap: 1.8rem;
   margin-bottom: 3rem;
 }
 
@@ -162,7 +157,7 @@
   position: relative;
   background: 
     linear-gradient(145deg, rgba(255, 255, 255, 0.9) 0%, rgba(246, 244, 240, 0.95) 100%);
-  border-radius: 20px;
+  border-radius: 0;
   padding: 1.5rem;
   border: 1px solid rgba(163, 136, 123, 0.15);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -171,6 +166,7 @@
   box-shadow: 
     0 8px 25px rgba(45, 48, 71, 0.08),
     0 3px 10px rgba(163, 136, 123, 0.05);
+  width: 100%;
 }
 
 .card:hover {
@@ -188,7 +184,7 @@
   background: rgba(231, 76, 60, 0.9);
   color: white;
   border: none;
-  border-radius: 50%;
+  border-radius: 0;
   width: 36px;
   height: 36px;
   display: flex;
@@ -196,7 +192,7 @@
   justify-content: center;
   cursor: pointer;
   transition: all 0.3s ease;
-  z-index: 10;
+  z-index: 20;
   backdrop-filter: blur(10px);
 }
 
@@ -210,6 +206,9 @@
   display: block;
   text-decoration: none;
   color: inherit;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
 }
 
 .imageWrapper {
@@ -219,9 +218,9 @@
 }
 
 .image {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
+  width: 110px;
+  height: 110px;
+  border-radius: 0;
   object-fit: cover;
   border: 3px solid rgba(163, 136, 123, 0.3);
   transition: all 0.3s ease;
@@ -238,7 +237,7 @@
 
 .itemName {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 700;
   color: var(--cor-do-banner);
   margin: 0 0 0.5rem 0;
@@ -270,7 +269,7 @@
   min-height: 50vh;
   text-align: center;
   background: rgba(255, 255, 255, 0.6);
-  border-radius: 24px;
+  border-radius: 0;
   padding: 3rem;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(163, 136, 123, 0.1);
@@ -305,7 +304,7 @@
   background: var(--cor-3-detalhes);
   color: white;
   text-decoration: none;
-  border-radius: 50px;
+  border-radius: 0;
   font-weight: 600;
   font-size: 1rem;
   transition: all 0.3s ease;
@@ -326,7 +325,7 @@
   background: var(--cor-3-detalhes);
   color: white;
   text-decoration: none;
-  border-radius: 25px;
+  border-radius: 0;
   font-weight: 500;
   font-size: 0.85rem;
   transition: all 0.3s ease;
@@ -344,9 +343,9 @@
 /* Responsividade */
 @media (max-width: 768px) {
   .header {
-    padding: 3rem 1.5rem 2rem;
+    padding: 3rem 1rem 2rem;
     margin-bottom: 1.5rem;
-    border-radius: 0 0 20px 20px;
+    border-radius: 0;
   }
   
   .title {
@@ -377,18 +376,19 @@
   }
   
   .grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
   }
   
   .card {
-    padding: 1.2rem;
-    border-radius: 16px;
+    padding: 1.3rem;
+    border-radius: 0;
+    width: 100%;
   }
   
   .image {
-    width: 100px;
-    height: 100px;
+    width: 95px;
+    height: 95px;
   }
   
   .itemName {
@@ -411,7 +411,7 @@
 
 @media (max-width: 480px) {
   .header {
-    padding: 2.5rem 1rem 1.5rem;
+    padding: 2.5rem 0.5rem 1.5rem;
   }
   
   .title {
@@ -426,8 +426,18 @@
     padding: 0 0.5rem;
   }
   
+  .tabs {
+    padding: 0 0.5rem;
+  }
+  
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
   .card {
-    padding: 1rem;
+    padding: 1.2rem;
+    width: 100%;
   }
   
   .removeButton {
@@ -438,8 +448,8 @@
   }
   
   .image {
-    width: 80px;
-    height: 80px;
+    width: 85px;
+    height: 85px;
   }
   
   .itemName {

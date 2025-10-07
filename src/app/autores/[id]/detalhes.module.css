@@ -21,7 +21,6 @@
   margin-top: 4rem;
   padding: 2rem;
   background: rgba(255, 255, 255, 0.8);
-  border-radius: 1rem;
   box-shadow: 0 4px 20px rgba(44, 56, 56, 0.1);
 }
 
@@ -30,7 +29,6 @@
   color: var(--cor-0);
   padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 0.5rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -50,7 +48,6 @@
 
 .detailsCard {
   background: rgba(255, 255, 255, 0.9);
-  border-radius: 1rem;
   box-shadow: 0 8px 32px rgba(44, 56, 56, 0.1);
   overflow: hidden;
   display: flex;
@@ -72,7 +69,6 @@
   max-width: 300px;
   height: 300px;
   object-fit: cover;
-  border-radius: 50%;
   box-shadow: 0 8px 24px rgba(44, 56, 56, 0.15);
   border: 4px solid rgba(255, 255, 255, 0.8);
   transition: transform 0.3s ease;
@@ -116,7 +112,6 @@
   gap: 0.5rem;
   padding: 1.25rem;
   background: rgba(246, 244, 240, 0.3);
-  border-radius: 0.75rem;
   border-left: 4px solid var(--cor-2);
   transition: all 0.3s ease;
 }
@@ -390,12 +385,20 @@
   gap: 1rem;
   align-items: flex-start;
   position: relative;
+  cursor: pointer;
+  user-select: none;
 }
 
 .livroCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+  border-color: var(--cor-3-detalhes);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.livroCard:active {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-  border-color: rgba(163, 136, 123, 0.4);
+  transition: transform 0.1s ease;
 }
 
 .livroImageWrapper {
@@ -413,6 +416,9 @@
 
 .livroInfo {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 120px;
 }
 
 .livroTitulo {
@@ -437,8 +443,28 @@
   gap: 0.5rem;
   font-size: 0.85rem;
   color: var(--cor-3-detalhes);
-  margin: 0;
+  margin: 0 0 0.5rem 0;
   font-weight: 500;
+}
+
+.clickHint {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--cor-3-detalhes);
+  opacity: 0.7;
+  font-weight: 500;
+  margin-top: auto;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(163, 136, 123, 0.1);
+  transition: all 0.3s ease;
+}
+
+.livroCard:hover .clickHint {
+  opacity: 1;
+  color: var(--cor-do-banner);
+  transform: translateX(4px);
 }
 
 /* Melhorias de acessibilidade */

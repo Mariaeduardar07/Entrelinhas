@@ -1,12 +1,13 @@
 "use client";
 
 import { useState, useEffect, use } from "react";
-import { useRouter } from "next/navigation";
 import axios from "axios";
 import Image from "next/image";
-import { BookOpen, Clock, Lightbulb, Heart } from "lucide-react"; // Ícones para autores
+import Link from "next/link";
+import { BookOpen, Clock, Lightbulb, Heart, ArrowLeft } from "lucide-react"; // Ícones para autores
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import BookCarrossel from "@/components/bookCarrossel";
 import styles from "./detalhes.module.css";
 
 export default function DetalhesAutor({ params }) {
@@ -16,7 +17,7 @@ export default function DetalhesAutor({ params }) {
   const [loading, setLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
   const [isFavorito, setIsFavorito] = useState(false);
-  const router = useRouter();
+  const [favoritos, setFavoritos] = useState([]);
 
   useEffect(() => {
     const buscarDetalhes = async () => {
@@ -44,6 +45,10 @@ export default function DetalhesAutor({ params }) {
         const favoritosIds = JSON.parse(localStorage.getItem('autoresFavoritos') || '[]');
         setIsFavorito(favoritosIds.includes(parseInt(resolvedParams.id)));
         
+        // Carrega favoritos de livros
+        const livrosFavoritos = JSON.parse(localStorage.getItem('livrosFavoritos') || '[]');
+        setFavoritos(livrosFavoritos);
+        
       } catch (error) {
         console.error("Erro ao buscar dados:", error);
       } finally {
@@ -58,11 +63,18 @@ export default function DetalhesAutor({ params }) {
 
   // Processa a imageUrl do backend
   const getImageUrl = (autor) => {
-    if (!autor.imageUrl) return fallbackImage;
+    if (!autor.imageUrl) return '/image/imgBanner.png';
     
     // Se a imageUrl começa com 'public/', remove essa parte
     if (autor.imageUrl.startsWith('public/')) {
-      return '/' + autor.imageUrl.substring(7); // Remove 'public/' e adiciona '/'
+      let url = '/' + autor.imageUrl.substring(7); // Remove 'public/' e adiciona '/'
+      
+      // Se não tem extensão, adiciona .png
+      if (!url.includes('.')) {
+        url += '.png';
+      }
+      
+      return url;
     }
     
     // Se já é uma URL completa ou caminho absoluto, usa como está
@@ -97,6 +109,25 @@ export default function DetalhesAutor({ params }) {
       localStorage.setItem('autoresFavoritos', JSON.stringify(novosIds));
       setIsFavorito(true);
       toast.success("Autor adicionado aos favoritos!");
+    }
+  };
+
+  // Alterna favorito de livro
+  const toggleFavoritoLivro = (livroId) => {
+    const favoritosIds = JSON.parse(localStorage.getItem('livrosFavoritos') || '[]');
+    
+    if (favoritos.includes(livroId)) {
+      // Remove dos favoritos
+      const novosIds = favoritosIds.filter(id => id !== livroId);
+      localStorage.setItem('livrosFavoritos', JSON.stringify(novosIds));
+      setFavoritos(novosIds);
+      toast.success("Livro removido dos favoritos!");
+    } else {
+      // Adiciona aos favoritos
+      const novosIds = [...favoritosIds, livroId];
+      localStorage.setItem('livrosFavoritos', JSON.stringify(novosIds));
+      setFavoritos(novosIds);
+      toast.success("Livro adicionado aos favoritos!");
     }
   };
 
@@ -155,9 +186,10 @@ export default function DetalhesAutor({ params }) {
           <span className={styles.errorIcon}>😢</span>
           Autor não encontrado
         </div>
-        <button onClick={() => router.back()} className={styles.backButton}>
-          ← Voltar
-        </button>
+        <Link href="/autores" className={styles.backButton}>
+          <ArrowLeft size={20} />
+          Voltar para Autores
+        </Link>
       </div>
     );
   }
@@ -165,9 +197,10 @@ export default function DetalhesAutor({ params }) {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <button onClick={() => router.back()} className={styles.backButton}>
-          ← Voltar para Autores
-        </button>
+        <Link href="/autores" className={styles.backButton}>
+          <ArrowLeft size={20} />
+          Voltar para Autores
+        </Link>
 
         <div className={styles.detailsCard}>
           <div className={styles.imageSection}>
@@ -226,60 +259,18 @@ export default function DetalhesAutor({ params }) {
                 </span>
               </div>
 
-              {/* Seção de Livros da API */}
-              {livros.length > 0 && (
-                <div className={styles.detailItem}>
-                  <span className={styles.label}>Obras do Autor:</span>
-                  <div className={styles.livrosGrid}>
-                    {livros.map((livro) => (
-                      <div key={livro.id} className={styles.livroCard}>
-                        <button 
-                          onClick={() => toggleLivroFavorito(livro)}
-                          className={styles.livroFavoriteButton}
-                          title="Adicionar/Remover dos favoritos"
-                        >
-                          <Heart size={16} />
-                        </button>
-                        
-                        <div className={styles.livroImageWrapper}>
-                          <img 
-                            src={getBookImageUrl(livro)}
-                            alt={livro.nome || livro.title}
-                            className={styles.livroImage}
-                            onError={(e) => {
-                              e.target.src = '/image/imgBanner.png';
-                            }}
-                          />
-                        </div>
-                        <div className={styles.livroInfo}>
-                          <h4 className={styles.livroTitulo}>{livro.nome || livro.title}</h4>
-                          {livro.description && (
-                            <p className={styles.livroDescricao}>
-                              {livro.description.substring(0, 150)}...
-                            </p>
-                          )}
-                          {livro.publicationDate && (
-                            <p className={styles.livroData}>
-                              <Clock size={14} />
-                              {new Date(livro.publicationDate).getFullYear()}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
 
-              {livros.length === 0 && (
-                <div className={styles.detailItem}>
-                  <span className={styles.label}>Obras:</span>
-                  <span className={styles.placeholder}>Nenhum livro encontrado para este autor</span>
-                </div>
-              )}
             </div>
           </div>
         </div>
+
+        {/* Carrossel de Livros */}
+        <BookCarrossel 
+          books={livros} 
+          authorName={autor.nome} 
+          favoritos={favoritos}
+          toggleFavorito={toggleFavoritoLivro}
+        />
       </div>
 
       <ToastContainer

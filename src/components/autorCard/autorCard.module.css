@@ -8,13 +8,12 @@
 .card {
   position: relative;
   display: block;
-  width: 280px;
-  height: 380px;
+  width: 240px;
+  height: 320px;
   background: linear-gradient(145deg, 
     var(--cor-1) 0%, 
     rgba(246, 251, 245, 0.9) 50%,
     var(--cor-1) 100%);
-  border-radius: 24px;
   text-decoration: none;
   color: inherit;
   overflow: hidden;
@@ -83,7 +82,7 @@
 .contentContainer {
   position: relative;
   height: 100%;
-  padding: 2rem 1.5rem 1.5rem;
+  padding: 1.5rem 1.2rem 1.2rem;
   display: flex;
   flex-direction: column;
   z-index: 5;
@@ -92,21 +91,20 @@
 /* Seção da Imagem Inovadora */
 .imageSection {
   position: relative;
-  flex: 0 0 200px;
+  flex: 0 0 160px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.2rem;
 }
 
 .imageFrame {
   position: relative;
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
+  width: 110px;
+  height: 110px;
   overflow: hidden;
   background: linear-gradient(145deg, #f8fafc, #e2e8f0);
-  padding: 4px;
+  padding: 3px;
   transition: all 0.4s ease;
 }
 
@@ -114,7 +112,6 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 50%;
   transition: all 0.4s ease;
   position: relative;
   z-index: 2;
@@ -139,7 +136,7 @@
 }
 
 .authorName {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 700;
   font-family: 'Cormorant Garamond', serif;
   color: var(--cor-do-banner);
@@ -169,7 +166,6 @@
   background: linear-gradient(90deg, 
     var(--theme-color, #26658c), 
     #8854c0);
-  border-radius: 1px;
   transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
@@ -184,14 +180,13 @@
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
   background: linear-gradient(135deg, 
     var(--cor-1), 
     rgba(255, 251, 245, 0.8));
   border: 1px solid rgba(4, 50, 34, 0.2);
-  border-radius: 20px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--cor-3-detalhes);
   transition: all 0.3s ease;
@@ -214,15 +209,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
+  gap: 0.4rem;
+  padding: 0.6rem 1.2rem;
   background: linear-gradient(135deg, 
     var(--cor-3-detalhes) 0%, 
     rgba(4, 50, 34, 0.9) 100%);
   color: var(--cor-1);
-  border-radius: 25px;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--cor-3);
   font-family: 'Cormorant Garamond', serif;
   margin-bottom: 0.5rem;
@@ -254,37 +248,12 @@
 /* Responsividade */
 @media (max-width: 768px) {
   .card {
-    width: 240px;
-    height: 340px;
-  }
-  
-  .contentContainer {
-    padding: 1.5rem 1rem 1rem;
-  }
-  
-  .imageFrame {
-    width: 110px;
-    height: 110px;
-  }
-  
-  .authorName {
-    font-size: 1.1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .card {
     width: 200px;
-    height: 300px;
+    height: 280px;
   }
   
   .contentContainer {
-    padding: 1rem 0.75rem;
-  }
-  
-  .imageSection {
-    flex: 0 0 160px;
-    margin-bottom: 1rem;
+    padding: 1.2rem 0.8rem 0.8rem;
   }
   
   .imageFrame {
@@ -295,10 +264,35 @@
   .authorName {
     font-size: 1rem;
   }
+}
+
+@media (max-width: 480px) {
+  .card {
+    width: 180px;
+    height: 250px;
+  }
+  
+  .contentContainer {
+    padding: 0.8rem 0.6rem;
+  }
+  
+  .imageSection {
+    flex: 0 0 120px;
+    margin-bottom: 0.8rem;
+  }
+  
+  .imageFrame {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .authorName {
+    font-size: 0.95rem;
+  }
   
   .ctaButton {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.8rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
   }
 }
 

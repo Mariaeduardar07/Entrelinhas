@@ -11,6 +11,8 @@ body {
   background: var(--cor-do-fundo);
   font-size: 18px; /* Aumentando o tamanho base */
   line-height: 1.6;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 :root {

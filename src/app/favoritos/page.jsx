@@ -78,7 +78,14 @@ export default function FavoritosPage() {
     if (!item.imageUrl) return '/image/imgBanner.png';
     
     if (item.imageUrl.startsWith('public/')) {
-      return '/' + item.imageUrl.substring(7);
+      let url = '/' + item.imageUrl.substring(7);
+      
+      // Se não tem extensão, adiciona .png
+      if (!url.includes('.')) {
+        url += '.png';
+      }
+      
+      return url;
     }
     
     return item.imageUrl;
@@ -141,7 +148,11 @@ export default function FavoritosPage() {
                 <div key={autor.id} className={styles.card}>
                   <button 
                     className={styles.removeButton}
-                    onClick={() => removerAutorFavorito(autor.id)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      removerAutorFavorito(autor.id);
+                    }}
                     title="Remover dos favoritos"
                   >
                     <Trash2 size={16} />
@@ -179,8 +190,8 @@ export default function FavoritosPage() {
               <BookOpen className={styles.emptyIcon} />
               <h3>Nenhum livro favorito</h3>
               <p>Adicione livros aos favoritos para vê-los aqui</p>
-              <Link href="/livros" className={styles.exploreButton}>
-                Explorar Livros
+              <Link href="/autores" className={styles.exploreButton}>
+                Explorar Autores
               </Link>
             </div>
           ) : (
@@ -189,13 +200,17 @@ export default function FavoritosPage() {
                 <div key={livro.id} className={styles.card}>
                   <button 
                     className={styles.removeButton}
-                    onClick={() => removerLivroFavorito(livro.id)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      removerLivroFavorito(livro.id);
+                    }}
                     title="Remover dos favoritos"
                   >
                     <Trash2 size={16} />
                   </button>
                   
-                  <div className={styles.cardLink}>
+                  <Link href={`/livros/${livro.id}`} className={styles.cardLink}>
                     <div className={styles.imageWrapper}>
                       <img
                         src={getImageUrl(livro)}
@@ -215,13 +230,8 @@ export default function FavoritosPage() {
                           {new Date(livro.publicationDate).getFullYear()}
                         </p>
                       )}
-                      
-                      <Link href="/livros" className={styles.exploreBookButton}>
-                        <BookOpen size={14} />
-                        Explorar Livros
-                      </Link>
                     </div>
-                  </div>
+                  </Link>
                 </div>
               ))}
             </div>

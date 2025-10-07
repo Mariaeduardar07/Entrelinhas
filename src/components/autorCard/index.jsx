@@ -11,7 +11,14 @@ export default function AutorCard({ autor }) {
     
     // Se a imageUrl começa com 'public/', remove essa parte
     if (autor.imageUrl.startsWith('public/')) {
-      return '/' + autor.imageUrl.substring(7); // Remove 'public/' e adiciona '/'
+      let url = '/' + autor.imageUrl.substring(7); // Remove 'public/' e adiciona '/'
+      
+      // Se não tem extensão, adiciona .png
+      if (!url.includes('.')) {
+        url += '.png';
+      }
+      
+      return url;
     }
     
     // Se já é uma URL completa ou caminho absoluto, usa como está

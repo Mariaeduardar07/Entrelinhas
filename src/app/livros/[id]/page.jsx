@@ -5,17 +5,18 @@ import { ArrowLeft, Calendar, User, BookOpen, Heart } from "lucide-react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import styles from "./detalhesLivro.module.css";
 
 export default function DetalhesLivroPage({ params }) {
   const resolvedParams = use(params);
+  const router = useRouter();
   const [livro, setLivro] = useState(null);
   const [autor, setAutor] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isFavorito, setIsFavorito] = useState(false);
-
   useEffect(() => {
     if (resolvedParams.id) {
       fetchLivroData(resolvedParams.id);
@@ -114,9 +115,9 @@ export default function DetalhesLivroPage({ params }) {
         <div className={styles.error}>
           <BookOpen className={styles.errorIcon} />
           <p>{error || "Livro não encontrado"}</p>
-          <Link href="/livros" className={styles.backButton}>
+          <Link href="/autores" className={styles.backButton}>
             <ArrowLeft size={20} />
-            Voltar aos Livros
+            Voltar aos Autores
           </Link>
         </div>
       </div>
@@ -126,15 +127,22 @@ export default function DetalhesLivroPage({ params }) {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <Link href="/livros" className={styles.backButton}>
-          <ArrowLeft size={20} />
-          Voltar aos Livros
-        </Link>
+        {autor ? (
+          <Link href={`/autores/${autor.id}`} className={styles.backButton}>
+            <ArrowLeft size={20} />
+            Voltar para {autor.nome}
+          </Link>
+        ) : (
+          <Link href="/autores" className={styles.backButton}>
+            <ArrowLeft size={20} />
+            Voltar aos Autores
+          </Link>
+        )}
 
         <div className={styles.detailsCard}>
           <div className={styles.imageSection}>
             <img
-              src={getImageUrl(livro)}
+              src={livro.image || '/image/imgBanner.png'}
               alt={livro.nome || livro.title}
               className={styles.image}
               onError={(e) => {

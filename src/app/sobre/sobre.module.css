@@ -28,7 +28,7 @@
 .heroContent {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 2rem;
     display: grid;
     grid-template-columns: 1.2fr 1fr;
     gap: 80px;
@@ -140,13 +140,14 @@
 
 /* Skills Section */
 .skillsSection {
-    padding: 100px 20px;
+    padding: 100px 0;
     background: var(--cor-1);
 }
 
 .skillsContainer {
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 2rem;
 }
 
 .sectionTitle {
@@ -235,7 +236,7 @@
 
 /* Projects Section */
 .projectsSection {
-    padding: 100px 20px;
+    padding: 100px 0;
     background: linear-gradient(135deg, var(--cor-1) 0%, var(--cor-do-fundo) 100%);
     position: relative;
 }
@@ -243,6 +244,7 @@
 .projectsContainer {
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 2rem;
 }
 
 .projectsSection .sectionTitle {
@@ -355,13 +357,14 @@
 
 /* About Section */
 .aboutSection {
-    padding: 100px 20px;
+    padding: 100px 0;
     background: #f8fafc;
 }
 
 .aboutContainer {
     max-width: 800px;
     margin: 0 auto;
+    padding: 0 2rem;
     text-align: center;
 }
 
@@ -406,10 +409,15 @@
 
 /* Responsividade */
 @media (max-width: 968px) {
+    .container {
+        overflow-x: hidden;
+    }
+    
     .heroContent {
         grid-template-columns: 1fr;
         gap: 50px;
         text-align: center;
+        padding: 0 1.5rem;
     }
     
     .heroTitle {
@@ -419,49 +427,168 @@
     .stats {
         justify-content: center;
     }
+    
+    .skillsGrid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+    }
 }
 
 @media (max-width: 768px) {
-    .hero,
+    .container {
+        overflow-x: hidden;
+    }
+    
+    .hero {
+        padding: 60px 1rem;
+        min-height: auto;
+    }
+    
     .skillsSection,
     .projectsSection,
     .aboutSection {
-        padding: 60px 15px;
+        padding: 60px 1rem;
+    }
+    
+    .heroContent {
+        padding: 0 1rem;
+        gap: 40px;
     }
     
     .heroTitle {
         font-size: 2.2rem;
     }
     
+    .heroDescription {
+        font-size: 1.1rem;
+        max-width: none;
+    }
+    
     .sectionTitle {
         font-size: 2rem;
     }
     
+    .skillsGrid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .skillCategory {
+        padding: 30px 20px;
+    }
+    
     .projectsGrid {
         grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .projectCard {
+        padding: 25px;
     }
     
     .interests {
         flex-direction: column;
         align-items: center;
+        gap: 20px;
     }
     
     .imageContainer {
         width: 280px;
         height: 280px;
     }
+    
+    .stats {
+        gap: 30px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 }
 
 @media (max-width: 480px) {
+    .container {
+        overflow-x: hidden;
+    }
+    
+    .hero {
+        padding: 40px 10px;
+    }
+    
+    .skillsSection,
+    .projectsSection,
+    .aboutSection {
+        padding: 50px 10px;
+    }
+    
+    .heroContent {
+        padding: 0 5px;
+        gap: 30px;
+    }
+    
     .heroTitle {
         font-size: 1.8rem;
+        line-height: 1.2;
+    }
+    
+    .heroDescription {
+        font-size: 1rem;
+    }
+    
+    .sectionTitle {
+        font-size: 1.75rem;
     }
     
     .stats {
         gap: 20px;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .stat {
+        width: 100%;
+        max-width: 120px;
     }
     
     .statNumber {
         font-size: 2rem;
+    }
+    
+    .imageContainer {
+        width: 240px;
+        height: 240px;
+    }
+    
+    .skillCategory {
+        padding: 25px 15px;
+    }
+    
+    .categoryIcon {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .projectCard {
+        padding: 20px;
+    }
+    
+    .projectHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .projectLinks {
+        align-self: center;
+    }
+    
+    .aboutText p {
+        font-size: 1.1rem;
+        text-align: left;
+    }
+    
+    .interest {
+        padding: 12px 20px;
+        width: 100%;
+        max-width: 200px;
+        justify-content: center;
     }
 }
